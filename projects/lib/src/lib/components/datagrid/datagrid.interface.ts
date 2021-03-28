@@ -3,6 +3,7 @@ export interface DatagridColumn {
     Type: 'number' | 'string' | 'date';
     Name: string;
     Filter?: boolean;
+    CustomTemplate?: string;
 }
 
 export interface DatagridOptions {

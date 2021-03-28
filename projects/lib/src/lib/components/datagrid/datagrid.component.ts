@@ -10,11 +10,11 @@ export class DatagridComponent implements OnInit {
 
   @Input() columns: DatagridColumn[];
   @Input() options: DatagridOptions;
-
-  data: any[];
+  @Input() data: any[];
 
   constructor() { }
 
   ngOnInit(): void {
   }
+
 }

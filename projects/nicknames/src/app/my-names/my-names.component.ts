@@ -18,8 +18,8 @@ export class MyNamesComponent implements OnInit {
   columns: DatagridColumn[] = [
     { Id: 'id', Name: 'Id', Type: 'number', Filter: false },
     { Id: 'name', Name: 'Name', Type: 'string', Filter: false },
-    { Id: 'color', Name: 'Favorite Color', Type: 'string', Filter: false },
-    { Id: 'creation', Name: 'Created On', Type: 'date', Filter: false }
+    { Id: 'creation', Name: 'Created On', Type: 'date', Filter: false },
+    { Id: 'color', Name: 'Favorite Color', Type: 'string', Filter: false, CustomTemplate: '{{row.color}} <span class="color-square" [style.backgroundColor]="row.color"></span>' }
   ];
 
   constructor() { }
