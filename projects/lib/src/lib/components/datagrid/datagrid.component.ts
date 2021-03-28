@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DatagridColumn, DatagridOptions } from './datagrid.interface';
 
 @Component({
   selector: 'lib-datagrid',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DatagridComponent implements OnInit {
 
+  @Input() columns: DatagridColumn[];
+  @Input() options: DatagridOptions;
+
+  data: any[];
+
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

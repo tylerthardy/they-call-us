@@ -8,8 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { MyNamesComponent } from './my-names/my-names.component';
 import { ProfileComponent } from './profile/profile.component';
-import { DateFilterComponent } from 'lib';
-import { DateFilterModule } from 'projects/lib/src/public-api';
+import { DateFilterModule } from 'lib';
+import { DatagridModule } from 'projects/lib/src/public-api';
 
 @NgModule({
   declarations: [
@@ -23,6 +23,7 @@ import { DateFilterModule } from 'projects/lib/src/public-api';
     AppRoutingModule,
     ClarityModule,
     BrowserAnimationsModule,
+    DatagridModule,
     DateFilterModule
   ],
   providers: [],

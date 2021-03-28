@@ -1,1 +1,28 @@
-<p>datagrid works!</p>
+<clr-datagrid>
+    <clr-dg-column *ngFor="let column of columns" [clrDgColType]="column.Filter ? column.Type : undefined" [clrDgField]="column.Id">
+        {{column.Name}} {{column.Type}}
+        <clr-dg-filter *ngIf="column.Filter && column.Type === 'date'">
+            <lib-date-filter *ngIf="column.Type === 'date'" [property]="column.Id"></lib-date-filter>
+        </clr-dg-filter>
+    </clr-dg-column>
+
+    <!-- <clr-dg-column [clrDgColType]="'number'" [clrDgField]="'id'">User ID</clr-dg-column>
+    <clr-dg-column [clrDgColType]="'string'" [clrDgField]="'name'">Name</clr-dg-column>
+    <clr-dg-column [clrDgColType]="'date'" [clrDgField]="'creation'">
+        Creation date
+        <clr-dg-filter>
+            <lib-date-filter property="creation"></lib-date-filter>
+        </clr-dg-filter>
+    </clr-dg-column>
+    <clr-dg-column [clrDgColType]="'string'" [clrDgField]="'color'">Favorite color</clr-dg-column> -->
+
+    <!-- <clr-dg-row *clrDgItems="let row of data">
+        <clr-dg-cell>{{user.id}}</clr-dg-cell>
+        <clr-dg-cell>{{user.name}}</clr-dg-cell>
+        <clr-dg-cell>{{user.creation | date:'full'}}</clr-dg-cell>
+        <clr-dg-cell>{{user.color}}
+            <span class="color-square" [style.backgroundColor]="user.color"></span></clr-dg-cell>
+    </clr-dg-row> -->
+
+    <!-- <clr-dg-footer>{{users.length}} users</clr-dg-footer> -->
+</clr-datagrid>
