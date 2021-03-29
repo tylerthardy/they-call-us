@@ -1,0 +1,22 @@
+<clr-modal [(clrModalOpen)]="openModal">
+    <h3 class="modal-title">{{config.Title}}</h3>
+    <div class="modal-body">
+        <p>{{config.Content}}</p>
+        <ng-container *ngIf="!!form">
+            <form clrForm [formGroup]="form">
+                <clr-input-container>
+                    <label>Field 1 label</label>
+                    <input clrInput type="text" formControlName="controlA" />
+                </clr-input-container>
+                <clr-input-container>
+                    <label>Field 2 label</label>
+                    <input clrInput type="text" formControlName="controlB" />
+                </clr-input-container>
+            </form>
+        </ng-container>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="ok()">Ok</button>
+        <button type="button" class="btn btn-outline" (click)="cancel()">Cancel</button>
+    </div>
+</clr-modal>

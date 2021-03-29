@@ -2,16 +2,19 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ModalConfig } from './modal.interface';
 
 @Component({
-    selector: 'app-modal',
+    selector: 'lib-modal',
     templateUrl: './modal.component.html'
 })
-export class ModalComponent {
+export class ModalComponent implements OnInit {
 
     config: ModalConfig;
     openModal = false;
 
     constructor(@Inject('config') config) {
         this.config = config;
+    }
+
+    ngOnInit(): void {
     }
 
     open(): void {
@@ -24,7 +27,9 @@ export class ModalComponent {
 
     ok(): void {
         this.openModal = false;
-        this.config.Ok({});
+        if (this.config.Ok) {
+            this.config.Ok({});
+        }
     }
 
 }

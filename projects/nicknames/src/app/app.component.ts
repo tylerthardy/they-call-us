@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
-import { ModalService } from './home/modal.service';
+import { ModalService } from 'lib';
 
 @Component({
   selector: 'app-root',
