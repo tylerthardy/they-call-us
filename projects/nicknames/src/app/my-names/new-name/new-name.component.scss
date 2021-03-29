@@ -1,0 +1,26 @@
+/* Ids */
+#buttons {
+    background-color: #333333;
+    height: 5vh;
+}
+#graph-area {
+    height: 94.7vh;
+}
+
+/* Classes */
+.ngx-charts {
+    background-color: red;
+}
+.node-text {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 15px;
+}
+.node-text:hover {
+    fill: white;
+}
+.add-text:hover {
+    fill: seagreen;
+}
+.remove-text:hover {
+    fill: tomato;
+}

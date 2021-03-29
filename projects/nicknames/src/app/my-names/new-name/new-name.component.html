@@ -1,0 +1,41 @@
+<div style="height: 7vh">
+    <button class="btn btn-success">Save</button>
+    <button class="btn btn-warning" routerLink="/my-names">Cancel</button>
+    <button class="btn" (click)="reset()">Reset</button>
+</div>
+<div style="height: 80vh; background-color:#e7e7e7">
+    <ngx-graph [links]="links"
+      [nodes]="nodes"
+      [clusters]="clusters"
+      [layoutSettings]="layoutSettings"
+      [update$]="update$"
+      [center$]="center$"
+      [panToNode$]="panToNode$"
+      [draggingEnabled]="false"
+      [showMiniMap]="true">
+        <ng-template #nodeTemplate let-node>
+            <svg:g class="node">
+                <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
+                    [attr.fill]="node.data.customColor" />
+                <svg:text class="node-text" alignment-baseline="central" [attr.x]="10"
+                    [attr.y]="node.dimension.height / 2" (click)="clickLabel(node)">
+                    {{node.label}}
+                </svg:text>
+                <svg alignment-baseline="central" [attr.x]="node.dimension.width-9" [attr.y]="0" [attr.visibility]="(node.data.showDelete ? 'visible' : 'hidden')">
+                    <rect [attr.width]="9" [attr.height]="10" [attr.fill]="node.data.customColor"/>
+                    <text class="remove-text" alignment-baseline="central" [attr.y]="4"
+                        style="font-family:sans-serif; font-size: 14px;" (click)="remove(node)">
+                        ×
+                    </text>
+                </svg>
+                <svg alignment-baseline="central" [attr.x]="node.dimension.width-9" [attr.y]="node.dimension.height-10">
+                    <rect [attr.width]="9" [attr.height]="10" [attr.fill]="node.data.customColor"/>
+                    <text class="add-text" alignment-baseline="central" [attr.y]="4"
+                        style="font-family:sans-serif; font-size: 14px;" (click)="add(node)">
+                        +
+                    </text>
+                </svg>
+            </svg:g>
+        </ng-template>
+    </ngx-graph>
+</div>
