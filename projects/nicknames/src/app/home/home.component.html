@@ -1,2 +1,14 @@
 <p>home works!</p>
 <button class="btn" (click)="open()">Modal</button>
+
+<form clrForm [formGroup]="zzForm">
+    <clr-input-container>
+        <label>Control A</label>
+        <input clrInput type="text" formControlName="test1" />
+    </clr-input-container>
+    <clr-input-container>
+        <label>Control B</label>
+        <input clrInput type="number" formControlName="test2" />
+    </clr-input-container>
+</form>
+<button type="button" class="btn btn-primary" (click)="ok()">Ok</button>

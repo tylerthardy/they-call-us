@@ -1,16 +1,12 @@
-<clr-modal [(clrModalOpen)]="openModal">
+<clr-modal [(clrModalOpen)]="openModal" [clrModalClosable]="false">
     <h3 class="modal-title">{{config.Title}}</h3>
     <div class="modal-body">
         <p>{{config.Content}}</p>
         <ng-container *ngIf="!!form">
             <form clrForm [formGroup]="form">
-                <clr-input-container>
-                    <label>Field 1 label</label>
-                    <input clrInput type="text" formControlName="controlA" />
-                </clr-input-container>
-                <clr-input-container>
-                    <label>Field 2 label</label>
-                    <input clrInput type="text" formControlName="controlB" />
+                <clr-input-container *ngFor="let field of config.Form.Fields">
+                    <label>{{field.Label}}</label>
+                    <input clrInput [type]="field.Type" [formControlName]="field.Id" />
                 </clr-input-container>
             </form>
         </ng-container>

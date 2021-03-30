@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService } from './modal.service';
 import { ModalComponent } from './modal.component';
-import { ClrModalModule } from '@clr/angular';
+import { ClarityModule, ClrModalModule } from '@clr/angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,9 @@ import { ClrModalModule } from '@clr/angular';
   ],
   imports: [
     CommonModule,
-    ClrModalModule
+    ReactiveFormsModule,
+    FormsModule,
+    ClarityModule
   ],
   exports: [
     ModalComponent

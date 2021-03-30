@@ -1,4 +1,5 @@
 import { ComponentFactoryResolver, ComponentRef, Injectable, Injector, ViewContainerRef } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { ModalComponent } from './modal.component';
 import { ModalConfig } from './modal.interface';
 
@@ -8,7 +9,7 @@ import { ModalConfig } from './modal.interface';
 export class ModalService {
   viewContainerRef: ViewContainerRef;
 
-  constructor(private factoryResolver: ComponentFactoryResolver) { }
+  constructor(private factoryResolver: ComponentFactoryResolver, private formBuilder: FormBuilder) { }
 
   setViewContainerRef(viewContainerRef: ViewContainerRef): void {
     this.viewContainerRef = viewContainerRef;
@@ -23,5 +24,6 @@ export class ModalService {
     const factory = this.factoryResolver.resolveComponentFactory(ModalComponent);
     const ref: ComponentRef<ModalComponent> = this.viewContainerRef.createComponent(factory, 0, injector);
     ref.instance.openModal = true;
+    ref.instance.destroy = () => ref.destroy();
   }
 }

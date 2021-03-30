@@ -11,6 +11,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { DateFilterModule, DatagridModule, ModalModule } from 'lib';
 import { NewNameComponent } from './my-names/new-name/new-name.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     ClarityModule,
     ModalModule,
     NgxGraphModule,
