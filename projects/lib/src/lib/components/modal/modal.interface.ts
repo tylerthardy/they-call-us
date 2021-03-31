@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidatorFn } from '@angular/forms';
 
 export interface ModalConfig {
     Title: string;
@@ -15,4 +15,6 @@ export interface ModalFormField {
     Id: string;
     Label: string;
     Type: 'text' | 'number';
+    Value?: any;
+    Validators?: ValidatorFn[];
 }

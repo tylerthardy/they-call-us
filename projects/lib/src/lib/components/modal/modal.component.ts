@@ -42,7 +42,7 @@ export class ModalComponent implements OnInit, OnDestroy {
         } else {
             this.form = this.formBuilder.group({});
             this.config.Form.Fields.forEach(
-                (field) => this.form.addControl(field.Id, new FormControl()));
+                (field) => this.form.addControl(field.Id, new FormControl(field.Value, [...field.Validators])));
         }
 
         // Hack around fields not being available until shortly after ngOnInit()
