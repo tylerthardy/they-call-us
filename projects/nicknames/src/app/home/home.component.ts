@@ -1,33 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ModalService } from 'lib';
+import { ModalConfig } from 'projects/lib/src/lib/components/modal/modal.interface';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-
-  zzForm: FormGroup;
+export class HomeComponent {
 
   constructor(private modalService: ModalService,
               private formBuilder: FormBuilder) { }
 
-  ngOnInit(): void {
-    this.zzForm = this.formBuilder.group({
-      test1: null,
-      test2: null
-    });
-  }
-
-  ok(): void {
-    console.log(this.zzForm);
-    console.log(this.zzForm.value);
-  }
-
   open(): void {
-    this.modalService.open({
+    const config: ModalConfig = {
       Title: 'Title',
       Content: 'Content',
       Form: {
@@ -40,8 +27,8 @@ export class HomeComponent implements OnInit {
             controlB: null,
             controlC: null
         })
-      },
-      Ok: (result) => console.log('result', result)
-    });
+      }
+    };
+    this.modalService.open(config).subscribe((result) => console.log(result));
   }
 }

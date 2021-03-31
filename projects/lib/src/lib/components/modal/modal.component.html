@@ -1,7 +1,7 @@
 <clr-modal [(clrModalOpen)]="openModal" [clrModalClosable]="false">
     <h3 class="modal-title">{{config.Title}}</h3>
     <div class="modal-body">
-        <p>{{config.Content}}</p>
+        <p *ngIf="!!config.Content">{{config.Content}}</p>
         <ng-container *ngIf="!!form">
             <form clrForm [formGroup]="form">
                 <clr-input-container *ngFor="let field of config.Form.Fields">

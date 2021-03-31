@@ -2,14 +2,13 @@ import { FormGroup } from '@angular/forms';
 
 export interface ModalConfig {
     Title: string;
-    Content: string;
+    Content?: string;
     Form?: ModalForm;
-    Ok?: (result) => void;
 }
 
 export interface ModalForm {
     Fields: ModalFormField[];
-    FormGroup: FormGroup;
+    FormGroup?: FormGroup;
 }
 
 export interface ModalFormField {
