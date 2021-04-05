@@ -1,8 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { DagreSettings, Edge, Node, Orientation } from '@swimlane/ngx-graph';
 import { Guid } from 'guid-typescript';
-import { Subject } from 'rxjs';
+import { ModalService } from 'lib';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-new-name',
@@ -11,7 +14,7 @@ import { Subject } from 'rxjs';
 })
 export class NewNameComponent {
 
-    constructor(@Inject(DOCUMENT) document) {
+    constructor(@Inject(DOCUMENT) document, private modalService: ModalService) {
         this.canvas = document.createElement('canvas') as HTMLCanvasElement;
         this.initialize();
     }
@@ -48,23 +51,21 @@ export class NewNameComponent {
     clusters = [];
 
     initialize(): void {
-        this.links = [];
-        this.nodes = [];
-        this.clusters = [];
-
         const isFirstLoad = !this.load();
-
         if (isFirstLoad) {
-            let label: string = null;
-            while (!label) {
-                label = this.promptLabel();
-            }
-            const first = this.createNode(label);
-            first.data.showDelete = false;
-            this.nodes.push(first);
+            this.promptLabel('What\'s the original name?').subscribe((label) => {
+                if (!label) {
+                    this.initialize();
+                    return;
+                }
+                const first = this.createNode(label);
+                first.data.showDelete = false;
+                this.nodes = [first];
+
+                this.save();
+            });
         }
 
-        this.save();
     }
 
     updateGraph(): void {
@@ -106,16 +107,23 @@ export class NewNameComponent {
     }
 
     clickLabel(node: Node): void {
-        const label = this.promptLabel();
-        this.setLabel(node, label);
+        this.promptLabel('Edit the name', node.label).subscribe((label) => this.setLabel(node, label));
     }
 
-    promptLabel(): string {
-        const out = prompt('Enter a name:');
-        if (!out) {
-            return;
-        }
-        return out;
+    promptLabel(title: string, existingValue?: string): Observable<string> {
+        const observable = this.modalService.open({
+            Title: title,
+            Form: { Fields: [{ Id: 'name', Label: 'Name', Type: 'text', Value: existingValue, Validators: [Validators.required] }] }
+        }).pipe(
+            map((result: any) => {
+                if (!result) {
+                    return null;
+                }
+                return result.name as string;
+            })
+        );
+
+        return observable;
     }
 
     setLabel(node: Node, label: string): void {
@@ -125,24 +133,25 @@ export class NewNameComponent {
     }
 
     add(node: Node): void {
-        const label = this.promptLabel();
-        if (!label) {
-            return;
-        }
+        this.promptLabel('What name came next?').subscribe((label) => {
+            if (!label) {
+                return;
+            }
 
-        const newNode = this.createNode(label);
-        this.nodes.push(newNode);
+            const newNode = this.createNode(label);
+            this.nodes.push(newNode);
 
-        const newLink: Edge = {
-            id: `${node.id}_${newNode.id}`,
-            target: newNode.id,
-            source: node.id
-        };
+            const newLink: Edge = {
+                id: `${node.id}_${newNode.id}`,
+                target: newNode.id,
+                source: node.id
+            };
 
-        this.links.push(newLink);
-        this.links = [...this.links];
+            this.links.push(newLink);
+            this.links = [...this.links];
 
-        this.save();
+            this.save();
+        });
     }
 
     remove(node: Node): void {
@@ -168,8 +177,10 @@ export class NewNameComponent {
             links: this.links,
             clusters: this.clusters
         };
-        const jsonData =  JSON.stringify(data);
+        const jsonData = JSON.stringify(data);
         localStorage.setItem('graph', jsonData);
+
+        this.updateGraph();
     }
 
     load(): boolean {
