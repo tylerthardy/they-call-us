@@ -43,7 +43,7 @@ import { INamesService, namesFactory } from './my-names/names.service';
       provide: INamesService,
       useFactory: namesFactory,
       deps: [HttpClient, Environment],
-   },
+    },
     { provide: Environment, useValue: environment }
   ],
   bootstrap: [AppComponent]
