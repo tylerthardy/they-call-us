@@ -12,6 +12,10 @@ import { DateFilterModule, DatagridModule, ModalModule } from 'lib';
 import { NewNameComponent } from './my-names/new-name/new-name.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
+import { Environment } from '../environments/environment.interface';
+import { HttpClient } from '@angular/common/http';
+import { INamesService, namesFactory } from './my-names/names.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +38,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     DatagridModule,
     DateFilterModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: INamesService,
+      useFactory: namesFactory,
+      deps: [HttpClient, Environment],
+   },
+    { provide: Environment, useValue: environment }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
