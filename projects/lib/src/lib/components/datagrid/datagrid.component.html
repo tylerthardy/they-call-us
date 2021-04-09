@@ -6,7 +6,7 @@
         </clr-dg-filter>
     </clr-dg-column>
 
-    <clr-dg-row *clrDgItems="let row of data">
+    <clr-dg-row *clrDgItems="let row of data" (click)="click(row)" [class.clickable-row]="!!options.click">
         <clr-dg-cell *ngFor="let column of columns">
             <ng-container *ngIf="column.Type !== 'date'">{{row[column.Id]}}</ng-container>
             <ng-container *ngIf="column.Type === 'date'">{{row[column.Id] | date: 'full'}}</ng-container>

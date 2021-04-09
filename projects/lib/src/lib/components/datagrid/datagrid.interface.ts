@@ -7,7 +7,7 @@ export interface DatagridColumn {
 }
 
 export interface DatagridOptions {
-    Test: boolean;
+    click?: (row: any) => any;
 }
 
 export enum ColumnType {
