@@ -9,7 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { MyNamesComponent } from './my-names/my-names.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DateFilterModule, DatagridModule, ModalModule } from 'lib';
-import { NewNameComponent } from './my-names/new-name/new-name.component';
+import { NameComponent } from './my-names/name/name.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
@@ -23,7 +23,7 @@ import { INamesService, namesFactory } from './my-names/names.service';
     HomeComponent,
     MyNamesComponent,
     ProfileComponent,
-    NewNameComponent
+    NameComponent
   ],
   imports: [
     BrowserModule,

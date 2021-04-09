@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ColumnType, DatagridColumn } from 'projects/lib/src/lib/components/datagrid/datagrid.interface';
-import { User } from '../../data-model/User';
+import { DatagridOptions } from 'dist/lib/lib/components/datagrid/datagrid.interface';
+import { DatagridColumn } from 'projects/lib/src/lib/components/datagrid/datagrid.interface';
+import { Name } from '../../data-model/Name';
 
 @Component({
   selector: 'app-my-names',
@@ -9,18 +10,22 @@ import { User } from '../../data-model/User';
 })
 export class MyNamesComponent implements OnInit {
 
-  users: User[] = [
-    { id: '1', name: 'Jim', color: 'blue', creation: new Date('2021-03-10T02:00:00.000Z') },
-    { id: '2', name: 'Amy', color: 'red', creation: new Date('2020-05-10T07:25:00.000Z') },
-    { id: '3', name: 'Bob', color: 'green', creation: new Date('2020-11-28T14:21:00.000Z') },
+  names: Name[] = [
+    { id: '1', rootName: 'Jim', createdOn: new Date('2021-03-10T02:00:00.000Z') },
+    { id: '2', rootName: 'Amy', createdOn: new Date('2020-05-10T07:25:00.000Z') },
+    { id: '3', rootName: 'Bob', createdOn: new Date('2020-11-28T14:21:00.000Z') },
   ];
 
   columns: DatagridColumn[] = [
-    { Id: 'id', Name: 'Id', Type: 'number', Filter: true },
-    { Id: 'name', Name: 'Name', Type: 'string', Filter: true },
-    { Id: 'creation', Name: 'Created On', Type: 'date', Filter: true },
-    { Id: 'color', Name: 'Favorite Color', Type: 'string', Filter: true }
+    { Id: 'rootName', Name: 'Name', Type: 'string', Filter: true },
+    { Id: 'createdOn', Name: 'Created On', Type: 'date', Filter: true }
   ];
+
+  options: DatagridOptions = {
+    // click: (row: Name) => {
+    //   console.log(row);
+    // }
+  };
 
   constructor() { }
 

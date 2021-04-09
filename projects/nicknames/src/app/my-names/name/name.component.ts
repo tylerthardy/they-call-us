@@ -8,13 +8,13 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-new-name',
-    templateUrl: './new-name.component.html',
-    styleUrls: ['./new-name.component.scss']
+    selector: 'app-name',
+    templateUrl: './name.component.html',
+    styleUrls: ['./name.component.scss']
 })
-export class NewNameComponent {
+export class NameComponent {
 
-    constructor(@Inject(DOCUMENT) document, private modalService: ModalService) {
+    constructor(@Inject(DOCUMENT) document: Document, private modalService: ModalService) {
         this.canvas = document.createElement('canvas') as HTMLCanvasElement;
         this.initialize();
     }
