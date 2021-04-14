@@ -23,8 +23,10 @@
     "@clr/angular": "5.0.3",
     "@clr/ui": "5.0.3",
     "@swimlane/ngx-graph": "^8.0.0-rc.1",
+    "@types/jsbn": "^1.2.29",
     "d3-scale": "^3.2.3",
     "guid-typescript": "^1.0.9",
+    "jsbn": "^0.1.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

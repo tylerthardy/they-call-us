@@ -1,10 +1,10 @@
-import { Edge } from '@swimlane/ngx-graph';
+import { Edge, Node } from '@swimlane/ngx-graph';
 
 export class Name {
     id: string;
     rootName: string;
     createdOn: Date;
-    link?: Edge[];
+    links?: Edge[];
     nodes?: Node[];
     clusters?: [];
 }

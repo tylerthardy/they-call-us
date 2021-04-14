@@ -14,8 +14,9 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { Environment } from '../environments/environment.interface';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { INamesService, namesFactory } from './my-names/names.service';
+import { NamesResolver } from './my-names/names.resolver';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { INamesService, namesFactory } from './my-names/names.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -42,7 +44,7 @@ import { INamesService, namesFactory } from './my-names/names.service';
     {
       provide: INamesService,
       useFactory: namesFactory,
-      deps: [HttpClient, Environment],
+      deps: [Environment, HttpClient],
     },
     { provide: Environment, useValue: environment }
   ],

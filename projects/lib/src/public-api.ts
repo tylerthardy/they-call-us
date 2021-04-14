@@ -13,3 +13,6 @@ export * from './lib/components/datagrid/datagrid.component';
 export * from './lib/components/modal/modal.module';
 export * from './lib/components/modal/modal.component';
 export * from './lib/components/modal/modal.service';
+
+// Util
+export * from './lib/util/base58.service';

@@ -1,12 +1,13 @@
 <div style="height: 7vh">
-    <button class="btn btn-success">Save</button>
+    <button class="btn btn-success" (click)="save()">Save</button>
     <button class="btn btn-warning" routerLink="/my-names">Cancel</button>
     <button class="btn" (click)="reset()">Reset</button>
 </div>
 <div style="height: 80vh; background-color:#e7e7e7">
-    <ngx-graph [links]="links"
-      [nodes]="nodes"
-      [clusters]="clusters"
+    <ngx-graph
+      [links]="name.links"
+      [nodes]="name.nodes"
+      [clusters]="name.clusters"
       [layoutSettings]="layoutSettings"
       [update$]="update$"
       [center$]="center$"

@@ -28,8 +28,15 @@ class NamesService implements INamesService {
 class LocalNamesService implements INamesService {
     private NAMES_KEY = 'names';
 
+    constructor() {
+        if (!localStorage.getItem(this.NAMES_KEY)) {
+            localStorage.setItem(this.NAMES_KEY, JSON.stringify([]));
+        }
+    }
+
     get(id: string): Observable<Name> {
-        return of(this.fetchAll().find(n => n.id === id));
+        const all = this.fetchAll();
+        return of(all.find(n => n.id === id));
     }
     getAll(): Observable<Name[]> {
         return of(this.fetchAll());
@@ -42,7 +49,10 @@ class LocalNamesService implements INamesService {
     }
     update(name: Name): Observable<string> {
         const names = this.fetchAll();
-        const idx = names.findIndex(n => n.id === name.id);
+        let idx = names.findIndex(n => n.id === name.id);
+        if (idx === -1) {
+            idx = names.length;
+        }
         names[idx] = name;
         localStorage.setItem(this.NAMES_KEY, JSON.stringify(names));
         return of(name.id);

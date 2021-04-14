@@ -1,35 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DatagridOptions } from 'dist/lib/lib/components/datagrid/datagrid.interface';
 import { DatagridColumn } from 'projects/lib/src/lib/components/datagrid/datagrid.interface';
+import { Base58Encoder } from 'projects/lib/src/lib/util/base58.service';
+import { map } from 'rxjs/operators';
 import { Name } from '../../data-model/Name';
+import { INamesService } from './names.service';
 
 @Component({
-  selector: 'app-my-names',
   templateUrl: './my-names.component.html',
   styleUrls: ['./my-names.component.scss']
 })
 export class MyNamesComponent implements OnInit {
 
-  names: Name[] = [
-    { id: '1', rootName: 'Jim', createdOn: new Date('2021-03-10T02:00:00.000Z') },
-    { id: '2', rootName: 'Amy', createdOn: new Date('2020-05-10T07:25:00.000Z') },
-    { id: '3', rootName: 'Bob', createdOn: new Date('2020-11-28T14:21:00.000Z') },
-  ];
+  names: Name[];
 
   columns: DatagridColumn[] = [
     { Id: 'rootName', Name: 'Name', Type: 'string', Filter: true },
-    { Id: 'createdOn', Name: 'Created On', Type: 'date', Filter: true }
+    { Id: 'createdOn', Name: 'Created On', Type: 'date', Filter: true },
+    { Id: 'nicknames', Name: 'Nicknames', Type: 'number', Computed: (row: Name) => row.nodes.length.toString() }
   ];
 
   options: DatagridOptions = {
-    // click: (row: Name) => {
-    //   console.log(row);
-    // }
+    click: (row: Name) => this.router.navigate([`my-names/${row.id}`])
   };
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private namesService: INamesService) { }
 
   ngOnInit(): void {
+    this.namesService.getAll()
+      .subscribe((names) => this.names = names);
   }
 
 }

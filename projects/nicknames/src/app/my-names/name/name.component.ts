@@ -1,22 +1,29 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { DagreSettings, Edge, Node, Orientation } from '@swimlane/ngx-graph';
 import { Guid } from 'guid-typescript';
 import { ModalService } from 'lib';
+import { Name } from 'projects/nicknames/src/data-model/Name';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { INamesService } from '../names.service';
 
 @Component({
-    selector: 'app-name',
     templateUrl: './name.component.html',
     styleUrls: ['./name.component.scss']
 })
 export class NameComponent {
 
-    constructor(@Inject(DOCUMENT) document: Document, private modalService: ModalService) {
-        this.canvas = document.createElement('canvas') as HTMLCanvasElement;
-        this.initialize();
+    constructor(
+        @Inject(DOCUMENT) document: Document,
+        private route: ActivatedRoute,
+        private namesService: INamesService,
+        private modalService: ModalService) {
+            this.name = this.route.snapshot.data.name;
+            this.canvas = document.createElement('canvas') as HTMLCanvasElement;
+            this.initialize();
     }
 
     MIN_WIDTH = 100;
@@ -46,21 +53,22 @@ export class NameComponent {
     layoutSettings: DagreSettings = {
         orientation: Orientation.TOP_TO_BOTTOM
     };
-    links: Edge[] = [];
-    nodes: Node[] = [];
-    clusters = [];
+
+    name: Name = null;
 
     initialize(): void {
-        const isFirstLoad = !this.load();
-        if (isFirstLoad) {
+        const isNew = !this.load();
+        if (isNew) {
             this.promptLabel('What\'s the original name?').subscribe((label) => {
                 if (!label) {
                     this.initialize();
                     return;
                 }
+                this.name.rootName = label;
+
                 const first = this.createNode(label);
                 first.data.showDelete = false;
-                this.nodes = [first];
+                this.name.nodes = [first];
 
                 this.save();
             });
@@ -139,7 +147,7 @@ export class NameComponent {
             }
 
             const newNode = this.createNode(label);
-            this.nodes.push(newNode);
+            this.name.nodes.push(newNode);
 
             const newLink: Edge = {
                 id: `${node.id}_${newNode.id}`,
@@ -147,51 +155,65 @@ export class NameComponent {
                 source: node.id
             };
 
-            this.links.push(newLink);
-            this.links = [...this.links];
+            this.name.links.push(newLink);
+            this.name.links = [...this.name.links];
 
             this.save();
         });
     }
 
     remove(node: Node): void {
-        const childrenLinks = this.links.filter(l => l.source === node.id);
+        const childrenLinks = this.name.links.filter(l => l.source === node.id);
         const childrenNodeIds = childrenLinks.map(l => l.target);
 
         // Remove children's children
         if (childrenNodeIds.length > 0) {
-            const childrenNodes = this.nodes.filter(n => childrenNodeIds.find(cni => cni === n.id));
+            const childrenNodes = this.name.nodes.filter(n => childrenNodeIds.find(cni => cni === n.id));
             childrenNodes.forEach(cn => this.remove(cn));
         }
 
         // Filter out the node, its children, and links to its children
-        this.links = this.links.filter(l => l.target !== node.id && l.source !== node.id);
-        this.nodes = this.nodes.filter(n => n.id !== node.id && !childrenNodeIds.find(cni => cni === n.id));
+        this.name.links = this.name.links.filter(l => l.target !== node.id && l.source !== node.id);
+        this.name.nodes = this.name.nodes.filter(n => n.id !== node.id && !childrenNodeIds.find(cni => cni === n.id));
 
         this.save();
     }
 
     save(): void {
-        const data = {
-            nodes: this.nodes,
-            links: this.links,
-            clusters: this.clusters
-        };
-        const jsonData = JSON.stringify(data);
-        localStorage.setItem('graph', jsonData);
+        this.namesService.update(this.name).subscribe(() => this.updateGraph());
+        // const data = {
+        //     nodes: this.name.nodes,
+        //     links: this.name.links,
+        //     clusters: this.name.clusters
+        // };
+        // const jsonData = JSON.stringify(data);
+        // localStorage.setItem('graph', jsonData);
 
-        this.updateGraph();
+        // this.updateGraph();
     }
 
     load(): boolean {
-        const jsonData = localStorage.getItem('graph');
-        const data = JSON.parse(jsonData);
-        if (!data) {
+        if (!this.name) {
+            this.name = {
+                id: Guid.create().toString(),
+                createdOn: new Date(),
+                rootName: null,
+                clusters: [],
+                links: [],
+                nodes: []
+            }
             return false;
         }
-        this.nodes = data.nodes;
-        this.links = data.links;
-        this.clusters = data.clusters;
+        // const jsonData = localStorage.getItem('graph');
+        // const data = JSON.parse(jsonData);
+        // if (!data) {
+        //     return false;
+        // }
+        // this.name.nodes = data.nodes;
+        // this.name.links = data.links;
+        // this.name.clusters = data.clusters;
+
+        // Loaded already, so don't initialize
         return true;
     }
 

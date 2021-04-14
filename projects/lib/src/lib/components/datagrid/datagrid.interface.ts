@@ -3,7 +3,7 @@ export interface DatagridColumn {
     Type: 'number' | 'string' | 'date';
     Name: string;
     Filter?: boolean;
-    CustomTemplate?: string;
+    Computed?: (row: any) => string;
 }
 
 export interface DatagridOptions {
@@ -13,5 +13,6 @@ export interface DatagridOptions {
 export enum ColumnType {
     String,
     Number,
-    Date
+    Date,
+    Button
 }

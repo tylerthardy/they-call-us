@@ -6,7 +6,7 @@
             <form clrForm [formGroup]="form">
                 <clr-input-container *ngFor="let field of config.Form.Fields">
                     <label>{{field.Label}}</label>
-                    <input clrInput [type]="field.Type" [formControlName]="field.Id" />
+                    <input clrInput [type]="field.Type" [formControlName]="field.Id" [attr.autocomplete]="field.Autocomplete ? 'on' : 'off'"/>
                 </clr-input-container>
             </form>
         </ng-container>

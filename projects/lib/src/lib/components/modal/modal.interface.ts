@@ -17,4 +17,5 @@ export interface ModalFormField {
     Type: 'text' | 'number';
     Value?: any;
     Validators?: ValidatorFn[];
+    Autocomplete?: boolean;
 }
