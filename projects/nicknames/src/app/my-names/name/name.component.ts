@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DagreSettings, Edge, Node, Orientation } from '@swimlane/ngx-graph';
 import { Guid } from 'guid-typescript';
 import { ModalService } from 'lib';
@@ -18,6 +18,7 @@ export class NameComponent {
 
     constructor(
         @Inject(DOCUMENT) document: Document,
+        private router: Router,
         private route: ActivatedRoute,
         private namesService: INamesService,
         private modalService: ModalService) {
@@ -57,18 +58,24 @@ export class NameComponent {
     name: Name = null;
 
     initialize(): void {
-        const isNew = !this.load();
-        if (isNew) {
+        if (!this.name) {
             this.promptLabel('What\'s the original name?').subscribe((label) => {
                 if (!label) {
-                    this.initialize();
+                    this.router.navigate(['my-names']);
                     return;
                 }
-                this.name.rootName = label;
 
                 const first = this.createNode(label);
                 first.data.showDelete = false;
-                this.name.nodes = [first];
+
+                this.name = {
+                    id: Guid.create().toString(),
+                    createdOn: new Date(),
+                    rootName: label,
+                    clusters: [],
+                    links: [],
+                    nodes: [first]
+                };
 
                 this.save();
             });
@@ -181,40 +188,6 @@ export class NameComponent {
 
     save(): void {
         this.namesService.update(this.name).subscribe(() => this.updateGraph());
-        // const data = {
-        //     nodes: this.name.nodes,
-        //     links: this.name.links,
-        //     clusters: this.name.clusters
-        // };
-        // const jsonData = JSON.stringify(data);
-        // localStorage.setItem('graph', jsonData);
-
-        // this.updateGraph();
-    }
-
-    load(): boolean {
-        if (!this.name) {
-            this.name = {
-                id: Guid.create().toString(),
-                createdOn: new Date(),
-                rootName: null,
-                clusters: [],
-                links: [],
-                nodes: []
-            }
-            return false;
-        }
-        // const jsonData = localStorage.getItem('graph');
-        // const data = JSON.parse(jsonData);
-        // if (!data) {
-        //     return false;
-        // }
-        // this.name.nodes = data.nodes;
-        // this.name.links = data.links;
-        // this.name.clusters = data.clusters;
-
-        // Loaded already, so don't initialize
-        return true;
     }
 
     reset(): void {
