@@ -122,7 +122,12 @@ export class NameComponent {
     }
 
     clickLabel(node: Node): void {
-        this.promptLabel('Edit the name', node.label).subscribe((label) => this.setLabel(node, label));
+        this.promptLabel('Edit the name', node.label).subscribe((label) => {
+            if (!label) {
+                return;
+            }
+            this.setLabel(node, label);
+        });
     }
 
     promptLabel(title: string, existingValue?: string): Observable<string> {
