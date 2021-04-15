@@ -1,3 +1,6 @@
 .clickable-row {
     cursor: pointer;
 }
+.datagrid-btn {
+    margin: 0;
+}

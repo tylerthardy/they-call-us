@@ -17,11 +17,18 @@ export class DatagridComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  click(row: any): void {
+  clickRow(row: any, event: Event): void {
     if (!this.options.click) {
       return;
     }
     this.options.click(row);
   }
 
+  clickCell(column: DatagridColumn, row: any, event: Event): void {
+    if (!column.Click) {
+      return;
+    }
+    event.stopPropagation();
+    column.Click(row);
+  }
 }

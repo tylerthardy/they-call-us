@@ -6,14 +6,17 @@
         </clr-dg-filter>
     </clr-dg-column>
 
-    <clr-dg-row *clrDgItems="let row of data" (click)="click(row)" [class.clickable-row]="!!options.click">
+    <clr-dg-row *clrDgItems="let row of data" (click)="clickRow(row, $event)" [class.clickable-row]="!!options.click">
         <clr-dg-cell *ngFor="let column of columns">
             <ng-container *ngIf="!!column.Computed">
                 {{column.Computed(row)}}
             </ng-container>
             <ng-container *ngIf="!column.Computed">
-                <ng-container *ngIf="column.Type !== 'date'">{{row[column.Id]}}</ng-container>
                 <ng-container *ngIf="column.Type === 'date'">{{row[column.Id] | date: 'medium'}}</ng-container>
+                <ng-container *ngIf="column.Type === 'button'">
+                    <button class="btn btn-sm btn-warning datagrid-btn" (click)="clickCell(column, row, $event)">{{column.Name}}</button>
+                </ng-container>
+                <ng-container *ngIf="column.Type !== 'date' && column.Type !== 'button'">{{row[column.Id]}}</ng-container>
             </ng-container>
         </clr-dg-cell>
     </clr-dg-row>
