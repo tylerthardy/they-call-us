@@ -60,7 +60,7 @@ class LocalNamesService implements INamesService {
     delete(id: string): Observable<boolean> {
         const names = this.fetchAll();
         const idx = names.findIndex(n => n.id === id);
-        names.splice(idx);
+        names.splice(idx, 1);
         localStorage.setItem(this.NAMES_KEY, JSON.stringify(names));
         return of(true);
     }

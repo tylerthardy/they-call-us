@@ -18,7 +18,8 @@ export class MyNamesComponent implements OnInit {
   columns: DatagridColumn[] = [
     { Id: 'rootName', Name: 'Name', Type: 'string', Filter: true },
     { Id: 'createdOn', Name: 'Created On', Type: 'date', Filter: true },
-    { Id: 'nicknames', Name: 'Nicknames', Type: 'number', Computed: (row: Name) => row.nodes.length.toString() }
+    { Id: 'nicknames', Name: 'Nicknames', Type: 'number', Computed: (row: Name) => row.nodes.length.toString() },
+    { Id: 'delete', Name: 'Delete', Type: 'button', Click: (row: Name) => this.delete(row) }
   ];
 
   options: DatagridOptions = {
@@ -32,6 +33,15 @@ export class MyNamesComponent implements OnInit {
   ngOnInit(): void {
     this.namesService.getAll()
       .subscribe((names) => this.names = names);
+  }
+
+  delete(name: Name): void {
+    const idx = this.names.findIndex(n => n.id === name.id);
+    if (idx === -1) {
+      return;
+    }
+    this.namesService.delete(name.id);
+    this.names.splice(idx, 1);
   }
 
 }
