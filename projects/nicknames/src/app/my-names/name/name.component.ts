@@ -192,12 +192,14 @@ export class NameComponent {
     }
 
     save(): void {
-        this.namesService.update(this.name).subscribe(() => this.updateGraph());
+        this.update().subscribe(() => this.updateGraph());
     }
 
-    reset(): void {
-        localStorage.setItem('graph', null);
-        this.initialize();
-        this.updateGraph();
+    back(): void {
+        this.update().subscribe(() => this.router.navigate(['my-names']));
+    }
+
+    private update(): Observable<any> {
+        return this.namesService.update(this.name);
     }
 }
