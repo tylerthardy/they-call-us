@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatagridOptions } from 'dist/lib/lib/components/datagrid/datagrid.interface';
+import { ModalService } from 'lib';
 import { DatagridColumn } from 'projects/lib/src/lib/components/datagrid/datagrid.interface';
-import { Base58Encoder } from 'projects/lib/src/lib/util/base58.service';
-import { map } from 'rxjs/operators';
 import { Name } from '../../data-model/Name';
 import { INamesService } from './names.service';
 
@@ -28,6 +27,7 @@ export class MyNamesComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private modalService: ModalService,
     private namesService: INamesService) { }
 
   ngOnInit(): void {
@@ -36,12 +36,19 @@ export class MyNamesComponent implements OnInit {
   }
 
   delete(name: Name): void {
-    const idx = this.names.findIndex(n => n.id === name.id);
-    if (idx === -1) {
-      return;
-    }
-    this.namesService.delete(name.id);
-    this.names.splice(idx, 1);
+    this.modalService.open({
+      Title: 'Really Delete?',
+      Content: `Are you sure you want to delete '${name.rootName}?`,
+    }).subscribe((result: any) => {
+      if (result) {
+        const idx = this.names.findIndex(n => n.id === name.id);
+        if (idx === -1) {
+          return;
+        }
+        this.namesService.delete(name.id);
+        this.names.splice(idx, 1);
+      }
+    });
   }
 
 }

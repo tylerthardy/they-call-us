@@ -55,6 +55,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     cancel(): void {
         this.openModal = false;
+        this.result = false;
 
         this.destroy();
     }
@@ -67,6 +68,8 @@ export class ModalComponent implements OnInit, OnDestroy {
             }
             const result = !!this.form ? this.form.value : null;
             this.result = result;
+        } else {
+            this.result = true;
         }
 
         this.destroy();
