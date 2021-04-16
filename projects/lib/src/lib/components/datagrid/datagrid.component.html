@@ -7,14 +7,19 @@
     </clr-dg-column>
 
     <clr-dg-row *clrDgItems="let row of data" (click)="clickRow(row, $event)" [class.clickable-row]="!!options.click">
-        <clr-dg-cell *ngFor="let column of columns">
+        <clr-dg-cell *ngFor="let column of columns" [class.btn-cell]="column.Type === 'button' || column.Type ==='icon-button'">
             <ng-container *ngIf="!!column.Computed">
                 {{column.Computed(row)}}
             </ng-container>
             <ng-container *ngIf="!column.Computed">
                 <ng-container *ngIf="column.Type === 'date'">{{row[column.Id] | date: 'medium'}}</ng-container>
-                <ng-container *ngIf="column.Type === 'button'">
-                    <button class="btn btn-sm btn-warning datagrid-btn" (click)="clickCell(column, row, $event)">{{column.Name}}</button>
+                <ng-container *ngIf="column.Type === 'button' || column.Type === 'icon-button'">
+                    <button class="btn btn-sm btn-warning datagrid-btn" [class.btn-icon]="column.Type === 'icon-button'" (click)="clickCell(column, row, $event)">
+                        <clr-icon [attr.shape]="column.Icon"></clr-icon>
+                        <span *ngIf="column.Type === 'button'">
+                            {{column.Name}}
+                        </span>
+                    </button>
                 </ng-container>
                 <ng-container *ngIf="column.Type !== 'date' && column.Type !== 'button'">{{row[column.Id]}}</ng-container>
             </ng-container>

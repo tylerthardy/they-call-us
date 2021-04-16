@@ -19,7 +19,7 @@ export class MyNamesComponent implements OnInit {
     { Id: 'rootName', Name: 'Name', Type: 'string', Filter: true },
     { Id: 'createdOn', Name: 'Created On', Type: 'date', Filter: true },
     { Id: 'nicknames', Name: 'Nicknames', Type: 'number', Computed: (row: Name) => row.nodes.length.toString() },
-    { Id: 'delete', Name: 'Delete', Type: 'button', Click: (row: Name) => this.delete(row) }
+    { Id: 'delete', Name: 'Delete', Icon: 'trash', Type: 'icon-button', Click: (row: Name) => this.delete(row) }
   ];
 
   options: DatagridOptions = {
