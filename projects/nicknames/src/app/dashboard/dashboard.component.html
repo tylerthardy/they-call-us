@@ -1,0 +1,85 @@
+<div class="clr-row">
+    <div class="clr-col-lg-4 clr-col-md-6 clr-col-12">
+        <app-leaderboard
+            title="Your Recent Names"
+            units="views"
+            [isLoading]="isLoading"
+            [isRecentBoard]="true"
+            [records]="data.YourRecentNames"
+            routerLink="my-names/{:id}"
+            cardIcon="crown">
+        </app-leaderboard>
+    </div>
+    <div class="clr-col-lg-4 clr-col-md-6 clr-col-12">
+        <app-leaderboard
+            title="Your Popular"
+            units="views"
+            [isLoading]="isLoading"
+            [records]="data.YourPopular"
+            routerLink="my-names/{:id}"
+            cardIcon="crown">
+        </app-leaderboard>
+    </div>
+    <div class="clr-col-lg-4 clr-col-md-6 clr-col-12">
+        <div class="card">
+            <div class="card-header">
+                Your Names
+            </div>
+            <div class="card-block">
+                <div class="card-text">
+                    <table class="table" style="margin-top: 0">
+                        <tbody>
+                            <tr>
+                                <td>Most Popular</td>
+                                <td>{{data.YourNames.MostPopularName.Name}} - {{data.YourNames.MostPopularName.Count}} views</td>
+                                <td class="btn-cell"><button class="btn btn-success btn-sm" [routerLink]="getYourNamesViewTop()"><clr-icon shape="user"></clr-icon>View</button></td>
+                            </tr>
+                            <tr>
+                                <td>Names</td>
+                                <td>{{data.YourNames.NameCount}}</td>
+                                <td class="btn-cell"><button class="btn btn-success btn-sm" routerLink="my-names"><clr-icon shape="users"></clr-icon>View All</button></td>
+                            </tr>
+                            <tr>
+                                <td>Total Names</td>
+                                <td>{{data.YourNames.TotalNames}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clr-col-lg-4 clr-col-md-6 clr-col-12">
+        <app-leaderboard
+            title="Community Recent Names"
+            units="views"
+            [isLoading]="isLoading"
+            [isRecentBoard]="true"
+            [records]="data.CommunityRecentNames"
+            routerLink="my-names/{:id}"
+            cardIcon="crown">
+        </app-leaderboard>
+    </div>
+    <div class="clr-col-lg-4 clr-col-md-6 clr-col-12">
+        <app-leaderboard
+            title="Community Popular"
+            units="views"
+            [isLoading]="isLoading"
+            [records]="data.CommunityPopular"
+            routerLink="my-names/{:id}"
+            cardIcon="crown">
+        </app-leaderboard>
+    </div>
+    <div class="clr-col-lg-4 clr-col-md-6 clr-col-12">
+        <app-leaderboard
+            title="Community All Time"
+            units="views"
+            [isLoading]="isLoading"
+            [records]="data.CommunityAllTime"
+            footerRouterLink="my-names"
+            routerLink="my-names/{:id}"
+            cardIcon="crown">
+        </app-leaderboard>
+    </div>
+</div>

@@ -16,7 +16,9 @@ import { environment } from '../environments/environment';
 import { Environment } from '../environments/environment.interface';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { INamesService, namesFactory } from './my-names/names.service';
-import { NamesResolver } from './my-names/names.resolver';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LeaderboardComponent } from './dashboard/leaderboard/leaderboard.component';
+import { dashboardFactory, IDashboardService } from './dashboard/dashboard.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { NamesResolver } from './my-names/names.resolver';
     HomeComponent,
     MyNamesComponent,
     ProfileComponent,
-    NameComponent
+    NameComponent,
+    DashboardComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,11 @@ import { NamesResolver } from './my-names/names.resolver';
     {
       provide: INamesService,
       useFactory: namesFactory,
+      deps: [Environment, HttpClient],
+    },
+    {
+      provide: IDashboardService,
+      useFactory: dashboardFactory,
       deps: [Environment, HttpClient],
     },
     { provide: Environment, useValue: environment }

@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-header">
+        <clr-icon [attr.shape]="cardIcon"></clr-icon>
+        {{title}}
+    </div>
+    <div class="card-block">
+        <clr-spinner *ngIf="isLoading">Loading photos</clr-spinner>
+        <table class="table" style="margin-top: 0">
+            <thead>
+                <tr>
+                    <th *ngIf="!isRecentBoard">Rank</th>
+                    <th>Name</th>
+                    <th *ngIf="!!isRecentBoard">Date</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of records">
+                    <td *ngIf="!isRecentBoard">{{record.Rank}}</td>
+                    <td>{{record.Name}} - {{getFormattedCount(record)}}</td>
+                    <td *ngIf="!!isRecentBoard">{{record.Date | date: 'medium'}}</td>
+                    <td class="btn-cell"><button class="btn btn-success btn-sm btn-icon" [routerLink]="getRouterLink(record)"><clr-icon shape="eye"></clr-icon></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer" *ngIf="footerRouterLink">
+        <button class="btn btn-sm btn-link" [routerLink]="footerRouterLink">View All</button>
+    </div>
+</div>
