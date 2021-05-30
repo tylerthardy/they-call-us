@@ -19,6 +19,7 @@ import { INamesService, namesFactory } from './my-names/names.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LeaderboardComponent } from './dashboard/leaderboard/leaderboard.component';
 import { dashboardFactory, IDashboardService } from './dashboard/dashboard.service';
+import { TheyCallUsClient } from '../data-model/DataModel';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,10 @@ import { dashboardFactory, IDashboardService } from './dashboard/dashboard.servi
       provide: IDashboardService,
       useFactory: dashboardFactory,
       deps: [Environment, HttpClient],
+    },
+    {
+      provide: TheyCallUsClient,
+      deps: [HttpClient]
     },
     { provide: Environment, useValue: environment }
   ],
